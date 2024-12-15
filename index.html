@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UTAGE セットアップガイド</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body class="min-h-screen bg-gray-100">
+    <header class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 group">
+          <div
+            class="transition-transform duration-200 group-hover:scale-110 group-hover:rotate-12"
+          >
+            <i data-lucide="mail" class="w-10 h-10 text-indigo-600"></i>
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold text-indigo-600 mb-2">
+              UTAGE セットアップガイド
+            </h1>
+            <p class="text-xl text-gray-600">
+              メール/LINE配信システムの設定手順
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div>
+          <h2
+            class="text-2xl font-semibold text-gray-900 mb-6 hover:text-indigo-600 transition-colors duration-200"
+          >
+            設定の流れ
+          </h2>
+          <div class="w-full max-w-2xl mx-auto" id="stepList"></div>
+        </div>
+        <div>
+          <div
+            class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+          >
+            <h2 class="text-xl font-semibold mb-4">セットアップ動画</h2>
+            <div class="aspect-w-16 aspect-h-9">
+              <iframe
+                class="w-full h-full rounded-lg"
+                src="https://www.youtube.com/embed/tlwZCtNQ2Bs"
+                title="UTAGE セットアップガイド"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Setup steps data
+      const setupSteps = [
+        {
+          id: 1,
+          title: '配信アカウントを作成',
+          description: '',
+        },
+        {
+          id: 2,
+          title: '公式LINEと繋げる',
+          description: '',
+        },
+        {
+          id: 3,
+          title: '公式LINE挨拶オフ確認',
+          description: '',
+        },
+        {
+          id: 4,
+          title: 'シナリオA作成',
+          description: '',
+        },
+        {
+          id: 5,
+          title: 'シナリオAを登録直後シナリオに設定',
+          description: '',
+        },
+        {
+          id: 6,
+          title: '挨拶メッセージ作成',
+          description: '',
+        },
+      ];
+
+      // Render steps
+      const stepList = document.getElementById('stepList');
+      let activeStep = 1;
+      let completedSteps = [];
+
+      function renderSteps() {
+        stepList.innerHTML = setupSteps
+          .map(
+            (step) => `
+                <div 
+                    onclick="handleStepClick(${step.id})"
+                    class="group p-4 rounded-lg mb-3 cursor-pointer transition-all duration-200 
+                        transform hover:scale-[1.02] hover:shadow-md
+                        ${
+                          activeStep === step.id
+                            ? 'bg-indigo-50 border-2 border-indigo-500'
+                            : 'bg-white border border-gray-200 hover:border-indigo-300'
+                        }"
+                >
+                    <div class="flex items-center gap-3">
+                        <div 
+                            class="rounded-full p-2 transition-all duration-200 
+                                ${
+                                  completedSteps.includes(step.id)
+                                    ? 'bg-green-500 text-white'
+                                    : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+                                }"
+                        >
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold text-lg text-gray-900">
+                                ${step.id}. ${step.title}
+                            </h3>
+                            <p class="text-gray-600">${step.description}</p>
+                        </div>
+                    </div>
+                </div>
+            `
+          )
+          .join('');
+        lucide.createIcons();
+      }
+
+      function handleStepClick(stepId) {
+        activeStep = stepId;
+        if (completedSteps.includes(stepId)) {
+          completedSteps = completedSteps.filter((id) => id !== stepId);
+        } else {
+          completedSteps.push(stepId);
+        }
+        renderSteps();
+      }
+
+      // Initial render
+      renderSteps();
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

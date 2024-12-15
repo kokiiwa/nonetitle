@@ -1,0 +1,1 @@
+export { VideoContainer as Video } from './VideoContainer';
